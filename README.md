@@ -81,3 +81,30 @@ cd docker
 docker-compose up --build
 ```
 This launches a MySQL container and binds it to the Flask container, serving the application at **`http://localhost:5000/`**.
+
+ai_business_manager/
+│
+├── manage.py
+├── .env
+├── requirements.txt
+│
+├── business_manager/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+│
+└── app/
+    ├── __init__.py
+    ├── models.py
+    ├── views.py
+    ├── urls.py
+    ├── admin.py
+    ├── apps.py
+    ├── migrations/
+    │
+    └── templates/
+        ├── login.html
+        ├── register.html
+        └── index.html (Main SPA Dashboard)
