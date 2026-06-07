@@ -177,5 +177,5 @@ def get_dashboard_kpis():
     })
 
 if __name__ == '__main__':
-    # Start on port 5000 in debug mode
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Start on port 5173 in debug mode
+    app.run(host='0.0.0.0', port=5173, debug=True)
