@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management - Smart ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-spark">✨</span>
+                <h2>Smart ERP</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" id="nav-dashboard" class="nav-item">
+                    <span class="icon">📊</span> Overview
+                </a>
+                <a href="/dashboard?tab=ai" id="nav-ai" class="nav-item">
+                    <span class="icon">🤖</span> AI Assistant
+                </a>
+                <a href="/employees" id="nav-employees" class="nav-item">
+                    <span class="icon">👥</span> Employees
+                </a>
+                <a href="/leaves" id="nav-leaves" class="nav-item active">
+                    <span class="icon">📅</span> Leaves
+                </a>
+                <a href="/tasks" id="nav-tasks" class="nav-item">
+                    <span class="icon">📋</span> Tasks
+                </a>
+            </nav>
+            <div class="user-profile-menu">
+                <div class="profile-avatar" id="sidebar-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name" id="sidebar-name">Loading...</span>
+                    <span class="profile-role" id="sidebar-role">Employee</span>
+                </div>
+                <button class="logout-btn" id="logout-button">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>Leave Management</h1>
+                    <p class="text-muted">Apply for leaves or review employee absence requests</p>
+                </div>
+            </header>
+
+            <div class="leaves-grid-layout">
+                <!-- Left Column: Apply Form & approvals -->
+                <div class="leaves-panel-main">
+                    <!-- Apply Form -->
+                    <div class="glass-card form-card">
+                        <h3>Apply for Leave</h3>
+                        <p class="text-muted small">Submit a leave request for manager review</p>
+                        
+                        <form id="apply-leave-form" class="margin-top">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="leave-type">Leave Type</label>
+                                    <select id="leave-type" required>
+                                        <option value="casual">Casual Leave</option>
+                                        <option value="sick">Sick Leave</option>
+                                        <option value="annual">Annual Leave</option>
+                                        <option value="unpaid">Unpaid Leave</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leave-days">Estimated Duration</label>
+                                    <input type="text" id="leave-days" value="0 days" readonly disabled class="read-only-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="leave-start">Start Date</label>
+                                    <input type="date" id="leave-start" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leave-end">End Date</label>
+                                    <input type="date" id="leave-end" required>
+                                </div>
+                            </div>
+                            <div class="form-group margin-top">
+                                <label for="leave-reason">Reason for Leave</label>
+                                <textarea id="leave-reason" rows="3" placeholder="Provide a brief explanation..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary margin-top">Submit Request</button>
+                        </form>
+                    </div>
+
+                    <!-- Pending Approvals list for Managers -->
+                    <div class="glass-card table-control-card margin-top hidden" id="manager-approvals-card">
+                        <h3>📥 Pending Leave Reviews</h3>
+                        <p class="text-muted small">Approve or reject team leave requests</p>
+                        
+                        <div class="approvals-list-container" id="manager-approvals-list">
+                            <div class="empty-state">No pending leave requests.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Personal history -->
+                <div class="leaves-panel-side">
+                    <div class="glass-card history-card">
+                        <h3>📅 My Leave History</h3>
+                        <p class="text-muted small">Status tracking of your requests</p>
+                        
+                        <div class="history-list" id="personal-leaves-list">
+                            <div class="empty-state">No leave applications found.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/js/leave.js"></script>
+</body>
+</html>

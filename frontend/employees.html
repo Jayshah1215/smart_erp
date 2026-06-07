@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees & Attendance - Smart ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-spark">✨</span>
+                <h2>Smart ERP</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" id="nav-dashboard" class="nav-item">
+                    <span class="icon">📊</span> Overview
+                </a>
+                <a href="/dashboard?tab=ai" id="nav-ai" class="nav-item">
+                    <span class="icon">🤖</span> AI Assistant
+                </a>
+                <a href="/employees" id="nav-employees" class="nav-item active">
+                    <span class="icon">👥</span> Employees
+                </a>
+                <a href="/leaves" id="nav-leaves" class="nav-item">
+                    <span class="icon">📅</span> Leaves
+                </a>
+                <a href="/tasks" id="nav-tasks" class="nav-item">
+                    <span class="icon">📋</span> Tasks
+                </a>
+            </nav>
+            <div class="user-profile-menu">
+                <div class="profile-avatar" id="sidebar-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name" id="sidebar-name">Loading...</span>
+                    <span class="profile-role" id="sidebar-role">Employee</span>
+                </div>
+                <button class="logout-btn" id="logout-button">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>Employee Operations</h1>
+                    <p class="text-muted">Clock in attendance and browse team directories</p>
+                </div>
+                <div class="header-right">
+                    <!-- Check-in Widget (Glass Card style header button) -->
+                    <div class="glass-card attendance-widget" id="attendance-widget">
+                        <span class="status-indicator yellow" id="attendance-status-dot"></span>
+                        <div class="attendance-info">
+                            <span class="small text-muted">Clock-in Status</span>
+                            <span class="bold" id="attendance-status-label">Loading status...</span>
+                        </div>
+                        <button class="btn btn-primary btn-small" id="checkin-btn" disabled>Check In</button>
+                        <button class="btn btn-secondary btn-small hidden" id="checkout-btn">Check Out</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="employees-grid-layout">
+                <!-- Left Column: Directory -->
+                <div class="employees-panel-main">
+                    <div class="glass-card table-control-card">
+                        <div class="table-header-row">
+                            <h3>Staff Directory</h3>
+                            <!-- Search Bar -->
+                            <input type="text" id="employee-search" class="search-input" placeholder="🔍 Search by name or department...">
+                            <!-- Add Employee (HR/Admin only) -->
+                            <button class="btn btn-primary hidden" id="add-employee-btn">➕ Add Employee</button>
+                        </div>
+                        
+                        <div class="cards-list-container" id="employees-list">
+                            <div class="empty-state">Loading directory...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Attendance logs -->
+                <div class="employees-panel-side">
+                    <!-- Today's Attendance list for HR/Admin -->
+                    <div class="glass-card log-card hidden" id="team-attendance-card">
+                        <h3>⏰ Team Clock-ins Today</h3>
+                        <p class="text-muted small">Live logs of active working employees</p>
+                        <div class="attendance-list" id="team-attendance-list">
+                            <div class="empty-state">No logs recorded today.</div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Attendance Logs -->
+                    <div class="glass-card log-card">
+                        <h3>📅 Attendance Logs</h3>
+                        <p class="text-muted small">Your check-in history for this month</p>
+                        <div class="attendance-list" id="personal-attendance-list">
+                            <div class="empty-state">No attendance recorded.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD NEW EMPLOYEE (HR/ADMIN ONLY) -->
+    <div class="modal-backdrop hidden" id="add-employee-modal">
+        <div class="glass-card modal-container">
+            <div class="modal-header">
+                <h2>Add New Employee</h2>
+                <button class="close-btn" id="modal-close-btn">&times;</button>
+            </div>
+            <form id="add-employee-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="emp-username">Username</label>
+                        <input type="text" id="emp-username" placeholder="e.g. jdoe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-password">Default Password</label>
+                        <input type="password" id="emp-password" value="password123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-firstname">First Name</label>
+                        <input type="text" id="emp-firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-lastname">Last Name</label>
+                        <input type="text" id="emp-lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-email">Email Address</label>
+                        <input type="email" id="emp-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-phone">Phone Number</label>
+                        <input type="text" id="emp-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-department">Department</label>
+                        <select id="emp-department">
+                            <option value="Engineering">Engineering</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-position">Position</label>
+                        <input type="text" id="emp-position" placeholder="e.g. Developer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-role">Role</label>
+                        <select id="emp-role">
+                            <option value="employee">Employee</option>
+                            <option value="hr">HR Manager</option>
+                            <option value="admin">System Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Popup Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/js/employee.js"></script>
+</body>
+</html>

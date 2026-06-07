@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Smart ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-body">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <div class="auth-container glass-card">
+        <div class="auth-header">
+            <h1 id="auth-title">Welcome Back</h1>
+            <p id="auth-subtitle">Login to access your corporate dashboard</p>
+        </div>
+
+        <div class="error-container" id="error-message"></div>
+        <div class="success-container" id="success-message"></div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" placeholder="Enter username (e.g. emp_john)" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter password (e.g. password123)" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <div class="auth-toggle">
+                Don't have an account? <a href="#" id="go-to-register">Register here</a>
+            </div>
+        </form>
+
+        <!-- REGISTER FORM (Hidden by default) -->
+        <form id="register-form" class="hidden">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-firstname">First Name</label>
+                    <input type="text" id="reg-firstname" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-lastname">Last Name</label>
+                    <input type="text" id="reg-lastname" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="email@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number</label>
+                    <input type="text" id="reg-phone" placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                    <label for="reg-department">Department</label>
+                    <select id="reg-department">
+                        <option value="Engineering">Engineering</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-position">Position</label>
+                    <input type="text" id="reg-position" placeholder="e.g. Junior Developer" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            <div class="auth-toggle">
+                Already registered? <a href="#" id="go-to-login">Sign in instead</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

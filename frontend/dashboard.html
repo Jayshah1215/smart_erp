@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <!-- Chart.js CDN for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-spark">✨</span>
+                <h2>Smart ERP</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" id="nav-dashboard" class="nav-item active">
+                    <span class="icon">📊</span> Overview
+                </a>
+                <a href="/dashboard?tab=ai" id="nav-ai" class="nav-item">
+                    <span class="icon">🤖</span> AI Assistant
+                </a>
+                <a href="/employees" id="nav-employees" class="nav-item">
+                    <span class="icon">👥</span> Employees
+                </a>
+                <a href="/leaves" id="nav-leaves" class="nav-item">
+                    <span class="icon">📅</span> Leaves
+                </a>
+                <a href="/tasks" id="nav-tasks" class="nav-item">
+                    <span class="icon">📋</span> Tasks
+                </a>
+            </nav>
+            <div class="user-profile-menu">
+                <div class="profile-avatar" id="sidebar-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name" id="sidebar-name">Loading...</span>
+                    <span class="profile-role" id="sidebar-role">Employee</span>
+                </div>
+                <button class="logout-btn" id="logout-button" title="Sign Out">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1 id="page-title">Corporate Overview</h1>
+                    <p id="page-subtitle" class="text-muted">Real-time business intelligence and KPI logs</p>
+                </div>
+                <div class="header-right">
+                    <!-- Date/Time Display -->
+                    <div class="header-clock text-muted">
+                        <span id="current-date">June 7, 2026</span>
+                    </div>
+                    
+                    <!-- Notifications Dropdown -->
+                    <div class="notifications-bell" id="notif-bell">
+                        <button class="bell-icon" id="notif-btn">
+                            🔔
+                            <span class="badge hidden" id="notif-badge">0</span>
+                        </button>
+                        <div class="notifications-dropdown hidden" id="notif-dropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <button id="mark-read-btn">Mark all read</button>
+                            </div>
+                            <div class="dropdown-list" id="notif-list">
+                                <div class="empty-state">No new alerts</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Subviews -->
+            <div class="tab-content">
+                <!-- VIEW 1: OVERVIEW/ANALYTICS (Active by default) -->
+                <div class="tab-pane" id="pane-overview">
+                    <!-- Metric Widget Grid -->
+                    <div class="kpi-grid">
+                        <div class="glass-card kpi-card">
+                            <div class="kpi-icon blue">👥</div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">Active Employees</span>
+                                <h3 class="kpi-value" id="kpi-employees">--</h3>
+                            </div>
+                        </div>
+                        <div class="glass-card kpi-card">
+                            <div class="kpi-icon yellow">📅</div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">Pending Leaves</span>
+                                <h3 class="kpi-value" id="kpi-leaves">--</h3>
+                            </div>
+                        </div>
+                        <div class="glass-card kpi-card">
+                            <div class="kpi-icon green">📈</div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">Task Completion Rate</span>
+                                <h3 class="kpi-value" id="kpi-tasks">--%</h3>
+                            </div>
+                        </div>
+                        <div class="glass-card kpi-card">
+                            <div class="kpi-icon violet">⏰</div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">Clocked-In Today</span>
+                                <h3 class="kpi-value" id="kpi-attendance">--</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout: Charts & Timelines -->
+                    <div class="dashboard-grid">
+                        <!-- Left Panel: Chart Visuals -->
+                        <div class="dashboard-panel main-panel">
+                            <div class="glass-card chart-card">
+                                <h3>Task Status Distribution</h3>
+                                <div class="chart-container">
+                                    <canvas id="tasksChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="glass-card chart-card">
+                                <h3>Leave Types Breakdown</h3>
+                                <div class="chart-container">
+                                    <canvas id="leavesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Activity Feed & Automations -->
+                        <div class="dashboard-panel side-panel">
+                            <!-- Workflow Automation logs (Manager only) -->
+                            <div class="glass-card log-card hidden" id="automation-logs-section">
+                                <h3>⚡ Workflow Automations</h3>
+                                <p class="text-muted small">System background actions and events</p>
+                                <div class="timeline" id="automation-list">
+                                    <div class="empty-state">No automation events logged.</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Activity Feed -->
+                            <div class="glass-card log-card">
+                                <h3>📋 Recent Activities</h3>
+                                <p class="text-muted small">Latest leave applications and task creations</p>
+                                <div class="timeline" id="activity-list">
+                                    <div class="empty-state">No recent activities.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: AI PLAYGROUND (Hidden by default, loaded via query param or JS click) -->
+                <div class="tab-pane hidden" id="pane-ai">
+                    <div class="ai-playground-layout">
+                        <!-- Categories Selector -->
+                        <div class="glass-card ai-sidebar">
+                            <h3>Capabilities</h3>
+                            <div class="ai-menu">
+                                <button class="ai-menu-item active" data-type="policy">
+                                    <span class="menu-icon">📝</span> HR Policy Generator
+                                </button>
+                                <button class="ai-menu-item" data-type="email">
+                                    <span class="menu-icon">📧</span> Email Composer
+                                </button>
+                                <button class="ai-menu-item" data-type="summary">
+                                    <span class="menu-icon">📊</span> Report Summarizer
+                                </button>
+                                <button class="ai-menu-item" data-type="faq">
+                                    <span class="menu-icon">💬</span> Company FAQs Solver
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Workspace Form & Output -->
+                        <div class="ai-workspace">
+                            <!-- Context Area -->
+                            <div class="glass-card ai-input-card">
+                                <h3 id="ai-input-title">HR Policy Generator</h3>
+                                <p class="text-muted small" id="ai-input-desc">Draft comprehensive corporate compliance standards and office guidelines.</p>
+                                
+                                <div class="form-group margin-top" id="form-group-topic">
+                                    <label for="ai-topic">Enter Topic</label>
+                                    <input type="text" id="ai-topic" placeholder="e.g. Remote Work, Social Media Usage, Cyber Security">
+                                </div>
+
+                                <div class="form-group margin-top hidden" id="form-group-context">
+                                    <label for="ai-context">Explain Context / Purpose</label>
+                                    <textarea id="ai-context" rows="3" placeholder="e.g. Announcing office closure for holiday next Monday, or warning for late logins."></textarea>
+                                </div>
+
+                                <div class="form-group margin-top hidden" id="form-group-tone">
+                                    <label for="ai-tone">Tone of Draft</label>
+                                    <select id="ai-tone">
+                                        <option value="professional">Professional / Direct</option>
+                                        <option value="formal">Formal / Authoritative</option>
+                                        <option value="casual">Casual / Friendly</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group margin-top hidden" id="form-group-report">
+                                    <label for="ai-report">Paste Report Text</label>
+                                    <textarea id="ai-report" rows="6" placeholder="Paste report document contents here to summarize..."></textarea>
+                                </div>
+
+                                <div class="form-group margin-top hidden" id="form-group-faq">
+                                    <label for="ai-question">Ask Question</label>
+                                    <input type="text" id="ai-question" placeholder="e.g. How do I apply for annual leaves? Or what are the core working hours?">
+                                </div>
+
+                                <button class="btn btn-primary margin-top" id="ai-generate-btn">
+                                    ✨ Generate with Gemini
+                                </button>
+                            </div>
+
+                            <!-- Output display -->
+                            <div class="glass-card ai-output-card">
+                                <div class="ai-output-header">
+                                    <h3>Assistant Output</h3>
+                                    <button class="btn btn-secondary btn-small hidden" id="ai-copy-btn">📋 Copy</button>
+                                </div>
+                                <div class="ai-result-body" id="ai-result">
+                                    <div class="empty-state">Configure options above and click generate. Responses will display here.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert Dialog -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

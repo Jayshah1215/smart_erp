@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Kanban Board - Smart ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-spark">✨</span>
+                <h2>Smart ERP</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" id="nav-dashboard" class="nav-item">
+                    <span class="icon">📊</span> Overview
+                </a>
+                <a href="/dashboard?tab=ai" id="nav-ai" class="nav-item">
+                    <span class="icon">🤖</span> AI Assistant
+                </a>
+                <a href="/employees" id="nav-employees" class="nav-item">
+                    <span class="icon">👥</span> Employees
+                </a>
+                <a href="/leaves" id="nav-leaves" class="nav-item">
+                    <span class="icon">📅</span> Leaves
+                </a>
+                <a href="/tasks" id="nav-tasks" class="nav-item active">
+                    <span class="icon">📋</span> Tasks
+                </a>
+            </nav>
+            <div class="user-profile-menu">
+                <div class="profile-avatar" id="sidebar-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name" id="sidebar-name">Loading...</span>
+                    <span class="profile-role" id="sidebar-role">Employee</span>
+                </div>
+                <button class="logout-btn" id="logout-button">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>Task Workflow Board</h1>
+                    <p class="text-muted">Track assignment pipelines and update progress states</p>
+                </div>
+                <div class="header-right">
+                    <!-- Assign Task button (HR/Admin only) -->
+                    <button class="btn btn-primary hidden" id="assign-task-btn">➕ Assign New Task</button>
+                </div>
+            </header>
+
+            <!-- Kanban Board Columns -->
+            <div class="kanban-board">
+                <!-- Column 1: To Do -->
+                <div class="kanban-column glass-card" id="col-todo">
+                    <div class="column-header">
+                        <span class="col-indicator todo"></span>
+                        <h3>To Do</h3>
+                        <span class="col-count" id="count-todo">0</span>
+                    </div>
+                    <div class="column-cards" id="cards-todo">
+                        <div class="empty-state">No tasks pending</div>
+                    </div>
+                </div>
+
+                <!-- Column 2: In Progress -->
+                <div class="kanban-column glass-card" id="col-inprogress">
+                    <div class="column-header">
+                        <span class="col-indicator inprogress"></span>
+                        <h3>In Progress</h3>
+                        <span class="col-count" id="count-inprogress">0</span>
+                    </div>
+                    <div class="column-cards" id="cards-inprogress">
+                        <div class="empty-state">No tasks active</div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Completed -->
+                <div class="kanban-column glass-card" id="col-completed">
+                    <div class="column-header">
+                        <span class="col-indicator completed"></span>
+                        <h3>Completed</h3>
+                        <span class="col-count" id="count-completed">0</span>
+                    </div>
+                    <div class="column-cards" id="cards-completed">
+                        <div class="empty-state">No tasks completed</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: ASSIGN TASK (HR/ADMIN ONLY) -->
+    <div class="modal-backdrop hidden" id="assign-task-modal">
+        <div class="glass-card modal-container">
+            <div class="modal-header">
+                <h2>Assign New Task</h2>
+                <button class="close-btn" id="modal-close-btn">&times;</button>
+            </div>
+            <form id="assign-task-form">
+                <div class="form-group">
+                    <label for="task-title">Task Title</label>
+                    <input type="text" id="task-title" placeholder="What needs to be done?" required>
+                </div>
+                <div class="form-group margin-top">
+                    <label for="task-desc">Description</label>
+                    <textarea id="task-desc" rows="3" placeholder="Provide detailed instructions..."></textarea>
+                </div>
+                <div class="form-grid margin-top">
+                    <div class="form-group">
+                        <label for="task-assignee">Assign To</label>
+                        <select id="task-assignee" required>
+                            <option value="">Select Employee...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-duedate">Due Date</label>
+                        <input type="date" id="task-duedate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Assign Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/js/task.js"></script>
+</body>
+</html>

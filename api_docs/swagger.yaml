@@ -1,0 +1,185 @@
+openapi: 3.0.3
+info:
+  title: Smart ERP REST API Specification
+  description: API endpoints for AI-Powered Business Management System (Users, Directory, Clock-ins, Leaves, Tasks, and Gemini AI).
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/api
+paths:
+  /auth/login:
+    post:
+      summary: User authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Login successful
+        '401':
+          description: Invalid credentials
+  /auth/register:
+    post:
+      summary: User self-registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                department:
+                  type: string
+                position:
+                  type: string
+              required:
+                - username
+                - password
+                - first_name
+                - last_name
+                - email
+                - position
+      responses:
+        '201':
+          description: Registration completed
+  /auth/session:
+    get:
+      summary: Fetch active session profile
+      responses:
+        '200':
+          description: Return session user and employee details
+  /employees/:
+    get:
+      summary: List all active staff directory
+      responses:
+        '200':
+          description: Success
+  /employees/add:
+    post:
+      summary: HR/Admin registers new employee
+      responses:
+        '201':
+          description: Employee created successfully
+  /employees/attendance/today:
+    get:
+      summary: Fetch logged-in user check-in status today
+      responses:
+        '200':
+          description: Today's check-in time details
+  /employees/attendance/checkin:
+    post:
+      summary: Clock-in shift today
+      responses:
+        '200':
+          description: Checked in
+  /employees/attendance/checkout:
+    post:
+      summary: Clock-out shift today
+      responses:
+        '200':
+          description: Checked out
+  /leaves/:
+    get:
+      summary: List leave history
+      responses:
+        '200':
+          description: Success
+  /leaves/apply:
+    post:
+      summary: Apply for casual, sick or annual leaves
+      responses:
+        '201':
+          description: Request created
+  /leaves/approve/{leave_id}:
+    post:
+      summary: Manager approves leave
+      parameters:
+        - name: leave_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Approved
+  /tasks/:
+    get:
+      summary: List Kanban board tasks
+      responses:
+        '200':
+          description: Success
+  /tasks/create:
+    post:
+      summary: Assign new task to team member
+      responses:
+        '201':
+          description: Task created
+  /tasks/update-status/{task_id}:
+    post:
+      summary: Shift task status (todo, in_progress, completed)
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+              required:
+                - status
+      responses:
+        '200':
+          description: Status modified
+  /ai/generate-policy:
+    post:
+      summary: Gemini writes HR policy draft
+      responses:
+        '200':
+          description: Policy generated
+  /ai/generate-email:
+    post:
+      summary: Gemini drafts employee announcement email
+      responses:
+        '200':
+          description: Email drafted
+  /ai/summarize-report:
+    post:
+      summary: Gemini summaries long reports
+      responses:
+        '200':
+          description: Text summarized
+  /ai/answer-faq:
+    post:
+      summary: Gemini answers FAQ queries
+      responses:
+        '200':
+          description: Question solved

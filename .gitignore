@@ -1,0 +1,22 @@
+# Smart ERP Git Ignore Configuration
+backend/.env
+backend/instance/
+.env
+
+# Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Editor / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
